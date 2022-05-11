@@ -1,9 +1,12 @@
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
+import { Linter } from 'eslint';
 
 import { processor } from '../lib/processor.cjs';
 
 import { eslint, html } from './helper/utils.mjs';
+
+const linter = new Linter();
 
 test('preprocess', (t) => {
   const code = html`
@@ -67,4 +70,44 @@ test('legacy', async (t) => {
         message.severity === 1,
     ),
   );
+});
+
+test('fix', (t) => {
+  const code = html`
+    <script>
+      'use strict';
+      alert();
+    </script>
+    abc
+  `;
+
+  const expected = html`
+    <script>
+      'use strict';
+
+      alert();
+    </script>
+    abc
+  `;
+
+  const messages = linter.verifyAndFix(
+    code,
+    {
+      rules: {
+        'padding-line-between-statements': [
+          'warn',
+          {
+            blankLine: 'always',
+            prev: 'directive',
+            next: '*',
+          },
+        ],
+      },
+    },
+    { filename: 'fake.htm', ...processor },
+  );
+
+  t.true(messages.fixed);
+  t.is(messages.output, expected);
+  t.deepEqual(messages.messages, []);
 });

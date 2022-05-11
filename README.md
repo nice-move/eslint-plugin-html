@@ -31,6 +31,12 @@ module.exports = {
 // or
 
 module.exports = {
+  extends: ['plugin:@nice-move/html/base']
+};
+
+// or
+
+module.exports = {
   overrides: [
     {
       files: ['*.{htm,html}'],
@@ -55,12 +61,25 @@ module.exports = {
 ## Todos
 
 - [ ] SVG support
-- [ ] `vscode-eslint` support
 
 ## Tips
 
 ### Different from [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
 
-`@nice-move/eslint-plugin-html` using [processor](https://eslint.org/docs/developer-guide/working-with-plugins#processors-in-plugins) to treat `<script>` and `<script type="module">` differently.
+`@nice-move/eslint-plugin-html` using [processor](https://eslint.org/docs/developer-guide/working-with-plugins#processors-in-plugins) to treat `<script>` and `<script type="module">` differently. It does not support the shared scope of multiple script tags for now.
 
 See: https://github.com/BenoitZugmeyer/eslint-plugin-html/issues/139
+
+And `@nice-move/eslint-plugin-html` is bundle-able.
+
+### [Visual Studio Code]() support
+
+When using [Eslint for VS Code](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), you may need to add following code to settings:
+
+```jsonc
+// example: settings.json or .vscode/settings.json
+// I don't know why `eslint-plugin-html` don't need this.
+{
+  "eslint.validate": ["html"]
+}
+```
