@@ -66,13 +66,13 @@ module.exports = {
 
 ### Different from [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
 
-`@nice-move/eslint-plugin-html` using [processor](https://eslint.org/docs/developer-guide/working-with-plugins#processors-in-plugins) to treat `<script>` and `<script type="module">` differently. It does not support the shared scope of multiple script tags for now.
+`@nice-move/eslint-plugin-html` using [processor](https://eslint.org/docs/developer-guide/working-with-plugins#processors-in-plugins) to treat `<script>` and `<script type="module">` differently.
 
 See: https://github.com/BenoitZugmeyer/eslint-plugin-html/issues/139
 
 And `@nice-move/eslint-plugin-html` is bundle-able.
 
-### [Visual Studio Code]() support
+### [Visual Studio Code](https://code.visualstudio.com/) support
 
 When using [Eslint for VS Code](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), you may need to add following code to settings:
 
@@ -83,3 +83,20 @@ When using [Eslint for VS Code](https://marketplace.visualstudio.com/items?itemN
   "eslint.validate": ["html"]
 }
 ```
+
+## Known Issues
+
+### Not compatible with [import/first](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/first.md) rule.
+
+See: https://github.com/import-js/eslint-plugin-import/issues/2407
+
+```xhtml --hack:not-html
+<script>
+  console.log('this example trigger error');
+  import 'http://something';
+</script>
+```
+
+### Can't share variable between multiple script tags
+
+See: [Reason why](#different-from-eslint-plugin-html)
