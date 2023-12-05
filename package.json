@@ -30,6 +30,7 @@
     "lint:staged": "nice-move lint staged",
     "prepare": "git config core.hooksPath .githooks",
     "prepublishOnly": "npm run lint:staged && npm test",
+    "snapshot": "ava --fail-fast -u -w",
     "test": "ava --fail-fast"
   },
   "dependencies": {

@@ -20,14 +20,8 @@ test('preprocess', (t) => {
 
   const [first, second] = processor.preprocess(code, 'fake.htm');
 
-  t.deepEqual(first, {
-    filename: 'fake.htm/0/html-script-module.js',
-    text: "\n                          \n      'use strict';\n    ",
-  });
-  t.deepEqual(second, {
-    filename: 'fake.htm/1/html-script-legacy.js',
-    text: '\n                          \n                   \n             \n            \n      alert();\n    ',
-  });
+  t.snapshot(first);
+  t.snapshot(second);
 });
 
 test('module', async (t) => {
@@ -41,14 +35,7 @@ test('module', async (t) => {
     filePath: 'fake.html',
   });
 
-  t.true(
-    result.messages.some(
-      (message) =>
-        message.ruleId === 'strict' &&
-        message.column === 7 &&
-        message.severity === 1,
-    ),
-  );
+  t.snapshot(result);
 });
 
 test('legacy', async (t) => {
@@ -62,29 +49,13 @@ test('legacy', async (t) => {
     filePath: 'fake.htm',
   });
 
-  t.true(
-    result.messages.some(
-      (message) =>
-        message.ruleId === 'strict' &&
-        message.column === 7 &&
-        message.severity === 1,
-    ),
-  );
+  t.snapshot(result);
 });
 
 test('fix', (t) => {
   const code = html`
     <script>
       'use strict';
-      alert();
-    </script>
-    abc
-  `;
-
-  const expected = html`
-    <script>
-      'use strict';
-
       alert();
     </script>
     abc
@@ -108,6 +79,6 @@ test('fix', (t) => {
   );
 
   t.true(messages.fixed);
-  t.is(messages.output, expected);
-  t.deepEqual(messages.messages, []);
+  t.snapshot(messages.output);
+  t.snapshot(messages.messages);
 });
