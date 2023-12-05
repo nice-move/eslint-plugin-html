@@ -1,4 +1,5 @@
-// eslint-disable-next-line import/no-unresolved
+import { basename } from 'node:path';
+
 import test from 'ava';
 import { Linter } from 'eslint';
 
@@ -35,6 +36,8 @@ test('module', async (t) => {
     filePath: 'fake.html',
   });
 
+  result.filePath = basename(result.filePath);
+
   t.snapshot(result);
 });
 
@@ -48,6 +51,8 @@ test('legacy', async (t) => {
   const [result] = await eslint.lintText(code, {
     filePath: 'fake.htm',
   });
+
+  result.filePath = basename(result.filePath);
 
   t.snapshot(result);
 });
@@ -78,7 +83,5 @@ test('fix', (t) => {
     { filename: 'fake.htm', ...processor },
   );
 
-  t.true(messages.fixed);
-  t.snapshot(messages.output);
-  t.snapshot(messages.messages);
+  t.snapshot(messages);
 });
