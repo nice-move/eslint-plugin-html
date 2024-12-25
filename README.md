@@ -21,6 +21,8 @@ npm install @nice-move/eslint-plugin-html --save-dev
 
 ## Usage
 
+### Eslint 8.x
+
 ```cjs
 // eslintrc.js
 
@@ -58,6 +60,49 @@ module.exports = {
 };
 ```
 
+### Eslint 9.x
+
+```mjs
+// eslint.config.mjs
+
+import {
+  base,
+  recommended
+} from '@nice-move/eslint-plugin-html/lib/configs-next.mjs';
+
+let configs = [...base];
+
+// or
+
+configs = [...recommended];
+
+// or
+
+configs = [
+  {
+    files: ['*.{htm,html}'],
+    processor: '@nice-move/html/html',
+    plugins: {
+      '@nice-move/html': plugin
+    }
+  },
+  {
+    files: ['**/*.{htm,html}/**/html-script-legacy.js'],
+    parserOptions: {
+      sourceType: 'script'
+    }
+  },
+  {
+    files: ['**/*.{htm,html}/**/html-script-module.js'],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  }
+];
+
+export default config;
+```
+
 ## Todos
 
 - [ ] SVG support
@@ -92,8 +137,9 @@ See: https://github.com/import-js/eslint-plugin-import/issues/2407
 
 ```xhtml --hack:not-html
 <script>
-  console.log('this example trigger error');
   import 'http://something';
+
+  console.log('this example trigger error');
 </script>
 ```
 
