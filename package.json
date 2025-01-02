@@ -1,6 +1,6 @@
 {
   "name": "@nice-move/eslint-plugin-html",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ESLint plugin to lint script tags in HTML",
   "license": "MIT",
   "author": {
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "globals": "^15.14.0",
-    "node-html-parser": "^6.1.13"
+    "node-html-parser": "^7.0.1"
   },
   "devDependencies": {
     "@bring-it/npm": "^0.5.9",
